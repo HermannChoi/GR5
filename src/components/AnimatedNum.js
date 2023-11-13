@@ -7,11 +7,11 @@ export default function AnimatedNum({ totalExpense }) {
       <AnimatedNumbers
         includeComma
         animateToNumber={totalExpense}
-        fontStyle={{ fontSize: "20px" }}
+        Style={{ fontSize: "20px", display: "flex", alignItems: "center" }}
         configs={[
           { mass: 1, tension: 100, friction: 30 },
-          { mass: 1, tension: 100, friction: 30 },
-          { mass: 1, tension: 100, friction: 30 },
+          { mass: 1, tension: 100, friction: 20 },
+          { mass: 1, tension: 100, friction: 40 },
         ]}
       ></AnimatedNumbers>
     </div>

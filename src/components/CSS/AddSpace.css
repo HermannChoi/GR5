@@ -18,13 +18,24 @@
   width: 400px;
   height: 30px;
   border: none;
-  background-color: transparent;
+  background-color: #02c253;
   margin: 3px auto;
+  border-radius: 5px;
   border-bottom: 1px solid green;
   font-size: 15px;
 }
 
+input::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
 .input:focus {
+  background-color: #00d358;
   border-bottom: 3px solid white;
   transition: all 0.1s;
 }
@@ -34,23 +45,24 @@
 }
 
 .submitBtn {
-  width: 60px;
-  height: 40px;
+  width: 70px;
+  height: 50px;
   border: 2px solid white;
   border-radius: 10px;
   background-color: #09e464;
   color: white;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 20px;
   cursor: pointer;
   transition: all 0.4s;
 }
 
-.submitBtn:hover {
+.submitBtn:hover,
+.submitBtn:focus {
   background-color: white;
   color: #09e464;
   border-color: #09e464;
-  font-size: 25px;
+  font-size: 30px;
   transition: all 0.2s;
 }
 

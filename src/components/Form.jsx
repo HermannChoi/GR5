@@ -7,7 +7,8 @@ export default function Form({
   nameValue,
   handleChange2,
   moneyValue,
-  handleAddClick,
+  firstInputRef,
+  submitBtnValue,
 }) {
   return (
     <div>
@@ -21,6 +22,7 @@ export default function Form({
               placeholder="ex)월세"
               onChange={handleChange}
               value={nameValue}
+              ref={firstInputRef}
               required
             />
           </div>
@@ -36,7 +38,7 @@ export default function Form({
               required
             />
           </div>
-          <NewFormBtn handleAddClick={handleAddClick} />
+          <NewFormBtn submitBtnValue={submitBtnValue} />
         </div>
       </form>
     </div>

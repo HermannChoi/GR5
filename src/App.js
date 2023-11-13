@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import "./Header.css";
-import "./AddSpace.css";
-import "./List.css";
+import React, { useState, useEffect, useRef } from "react";
+import "./components/CSS/App.css";
+import "./components/CSS/Header.css";
+import "./components/CSS/AddSpace.css";
+import "./components/CSS/List.css";
 import Header from "./components/Header";
 import Form from "./components/Form";
 import List from "./components/List";
@@ -15,18 +15,41 @@ export default function App() {
   const [moneyValue, setMoneyValue] = useState("");
   const [totalExpense, setTotalExpense] = useState(0);
   const [activeColorClass, setActiveColorClass] = useState("");
+  const [headerName, setHeaderName] = useState("Budget Calculator");
+  const [submitBtnValue, setSubmitBtnValue] = useState("add");
+  const [editTarget, setEditTarget] = useState("");
 
-  const handleAddClick = () => {
-    setActiveColorClass("addColor");
-  };
+  const firstInputRef = useRef(null); // submit하면 다시 첫번째 input에 focus하게
 
   const handleClick = (id) => {
     let newExpenseData = expenseData.filter((data) => data.id !== id);
     setExpenseData(newExpenseData);
+
+    setActiveColorClass("deleteColor");
+    setHeaderName("삭제되었습니다.");
+    setTimeout(() => {
+      setActiveColorClass("");
+      setHeaderName("Budget Calculator");
+    }, 2500);
   };
 
   const handleDeleteAll = () => {
     setExpenseData([]);
+
+    setActiveColorClass("deleteAllColor");
+    setHeaderName("모두 삭제되었습니다.");
+    setTimeout(() => {
+      setActiveColorClass("");
+      setHeaderName("Budget Calculator");
+    }, 2500);
+  };
+
+  const handleEditClick = (data) => {
+    const dataToEdit = data.title;
+    setNameValue(dataToEdit);
+    const dataToEdit2 = data.money;
+    setMoneyValue(dataToEdit2);
+    setSubmitBtnValue("edit");
   };
 
   const handleChange = (e) => {
@@ -40,15 +63,51 @@ export default function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let newExpense = {
-      id: Date.now(),
-      title: nameValue,
-      money: parseInt(moneyValue),
-    };
+    if (submitBtnValue === "add") {
+      let newExpense = {
+        id: Date.now(),
+        title: nameValue,
+        money: parseInt(moneyValue),
+      };
 
-    setExpenseData((prev) => [...prev, newExpense]);
-    setNameValue("");
-    setMoneyValue("");
+      setActiveColorClass("addColor");
+      setHeaderName("추가되었습니다.");
+      setTimeout(() => {
+        setActiveColorClass("");
+        setHeaderName("Budget Calculator");
+      }, 2500);
+
+      setExpenseData((prev) => [...prev, newExpense]);
+      setNameValue("");
+      setMoneyValue("");
+
+      if (firstInputRef.current) {
+        firstInputRef.current.focus();
+      }
+    } else {
+      const updatedList = expenseData.map((item) => {
+        if (editTarget.id === item.id) {
+          return { ...item, title: nameValue, money: moneyValue };
+        }
+        return item;
+      });
+      setExpenseData(updatedList);
+      setSubmitBtnValue("add");
+
+      setActiveColorClass("editColor");
+      setHeaderName("수정되었습니다.");
+      setTimeout(() => {
+        setActiveColorClass("");
+        setHeaderName("Budget Calculator");
+      }, 2500);
+
+      setNameValue("");
+      setMoneyValue("");
+
+      if (firstInputRef.current) {
+        firstInputRef.current.focus();
+      }
+    }
   };
 
   useEffect(() => {
@@ -61,7 +120,7 @@ export default function App() {
 
   return (
     <div>
-      <Header activeColorClass={activeColorClass} />
+      <Header headerName={headerName} activeColorClass={activeColorClass} />
       <div className="body">
         <div className="body_inner">
           <Form
@@ -70,9 +129,15 @@ export default function App() {
             nameValue={nameValue}
             handleChange2={handleChange2}
             moneyValue={moneyValue}
-            handleAddClick={handleAddClick}
+            firstInputRef={firstInputRef}
+            submitBtnValue={submitBtnValue}
           />
-          <List expenseData={expenseData} handleClick={handleClick} />
+          <List
+            expenseData={expenseData}
+            handleClick={handleClick}
+            handleEditClick={handleEditClick}
+            setEditTarget={setEditTarget}
+          />
           <DeleteAllBtn handleDeleteAll={handleDeleteAll} />
         </div>
         <div className="body_inner2">
@@ -84,6 +149,7 @@ export default function App() {
           </div>
         </div>
       </div>
+      <footer className="footer">You can make it, bro. Don't give up</footer>
     </div>
   );
 }

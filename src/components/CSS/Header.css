@@ -1,0 +1,69 @@
+.title {
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: #30ff87;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  text-shadow: 0 0 10px black;
+  text-indent: 0px;
+  transition: all 1.2s;
+}
+
+.title:hover {
+  height: 70px;
+  transition: 0.5s;
+}
+
+.addColor {
+  background-color: rgb(25, 94, 255) !important;
+  color: white;
+  animation: goingOut 2.5s;
+  transition: all 1s;
+}
+
+.editColor {
+  background-color: #00e9de !important;
+  color: white;
+  animation: goingOut 2.5s;
+  transition: all 1s;
+}
+
+.deleteColor {
+  background-color: rgb(255 67 67) !important;
+  color: white;
+  animation: goingOut 2.5s;
+  transition: all 1s;
+}
+
+.deleteAllColor {
+  background-color: #c300c3 !important;
+  color: white;
+  animation: goingOut 2.5s;
+  transition: all 1s;
+}
+
+@keyframes goingOut {
+  0% {
+    text-indent: 100px;
+    color: transparent;
+  }
+  10% {
+    color: white;
+  }
+  50% {
+    text-indent: 0px;
+  }
+  90% {
+    text-indent: -1600px;
+  }
+  100% {
+    text-indent: -2000px;
+  }
+}
